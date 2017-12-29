@@ -7,9 +7,10 @@
       // function usage: abbrev(n, decPlaces, units)
       var n = arguments[0]
       var decPlaces = arguments[1]
-      units = arguments[2]
+      var floor = !!arguments[2]
+      units = arguments[3]
       var ab = new NumberAbbreviate(units)
-      return ab.abbreviate(n, decPlaces)
+      return ab.abbreviate(n, decPlaces, floor)
     }
     // class usage: new NumberAbbreviate(units)
     units = arguments[0]
@@ -24,7 +25,7 @@
       var size = Math.pow(10, (i + 1) * 3)
 
       if (size <= number) {
-        number = Math[!!floor ? 'floor' : 'round'](number * decPlaces / size) / decPlaces
+        number = Math[floor ? 'floor' : 'round'](number * decPlaces / size) / decPlaces
 
         if ((number === 1000) && (i < this.units.length - 1)) {
           number = 1
@@ -42,7 +43,7 @@
 
   NumberAbbreviate.prototype.abbreviate = function (number, decPlaces, floor) {
     var isNegative = number < 0
-    var abbreviatedNumber = this._abbreviate(Math.abs(number), decPlaces || 0, !!floor)
+    var abbreviatedNumber = this._abbreviate(Math.abs(number), decPlaces || 0, floor)
 
     return isNegative ? '-' + abbreviatedNumber : abbreviatedNumber;
   }
